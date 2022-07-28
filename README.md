@@ -1,86 +1,66 @@
-# ACE-ToolingTemplate
+# Azure Key Vault
 
-Template repository for management of ACE code. This repo should be used as the framework for maintaining ACE code that is not a part of the Launchpad stack
+Azure Key Vault Deployment
 
 ## Description
 
-- Terraform Version:
-- Cloud(s) supported:{Government/Commercial}
-- Product Version/License:
-- FedRAMP Compliance Support: {}
-- DoD Compliance Support:{IL4/5}
-- Misc Framework Support:
-- Launchpad validated version:
+This module manages an Azure Key Vault.
 
-## Setup and usage
+## Resource List
 
-Describes what changes are needed to leverage this code. Likely should have several sub headings including items as
+- Key Vault
+- Diagnostic settings
 
-- process/structure for code modifications in the version of Launchpad listed above
-- modules/output/variable updates
-- removal of existing LP technology
+## Inputs
 
-### Code Location
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:-----:|
+| kv_name | The Key Vault name | string | N/A | yes |
+| location | The Azure location/region to create resources in | string | N/A | yes |
+| resource_group_name | Azure Resource Group resource will be deployed in | string | N/A | yes |
+| diag_log_analytics_id | ID of the Log Analytics Workspace diagnostic logs should be sent to | string | N/A | yes |
+| tenant_id | The Azure tenant id | string | N/A | yes |
+| enabled_for_deployment | Allows Azure VM's to retreive secrets | bool | N/A | yes |
+| enabled_for_disk_encryption | Azure Disk Encryption to retrieve secrets | bool | N/A | yes |
+| tags | Resource level tags | map(string) | N/A | yes |
+| regional_tags | Regional level tags | map(string) | N/A | yes |
+| global_tags | Global level tags | map(string) | N/A | yes |
+| enabled_for_template_deployment | Allow ARM to retrieve secrets | bool | true | no |
+| network_acls | Object with attributes: `bypass`, `default_action`, `ip_rules`, `virtual_network_subnet_ids`. See https://www.terraform.io/docs/providers/azurerm/r/key_vault.html#bypass for more informations | object | null | no |
 
-Code should be stored in terraform/app/code
+## Outputs
 
-### Code updates
+| Name | Description |
+|------|-------------|
+| key_vault_id | The ID of the Key Vault |
+| key_vault_name | Name of the Key Vault |
+| key_vault_uri | The URI of the Key Vault | 
 
-Ensure that vars zyx are in regional/global vars
+## Usage
 
-## Issues
+```hcl
+module "ad_kv" {
+  source = "../../../../modules/coalfire-az-key-vault"
 
-Bug fixes and enhancements are managed, tracked, and discussed through the GitHub issues on this repository.
-
-Issues should be flagged appropriately.
-
-- Bug
-- Enhancement
-- Documentation
-- Code
-
-### Bugs
-
-Bugs are problems that exist with the technology or code that occur when expected behavior does not match implementation.
-For example, spelling mistakes on a dashboard.
-
-Use the Bug fix template to describe the issue and expected behaviors.
-
-### Enhancements
-
-Updates and changes to the code to support additional functionality, new features or improve engineering or operations usage of the technology.
-For example, adding a new widget to a dashboard to report on failed backups is enhancement.
-
-Use the Enhancement issue template to request enhancements to the codebase. Enhancements should be improvements that are applicable to wide variety of clients and projects. One of updates for a specific project should be handled locally. If you are unsure if something qualifies for an enhancement contact the repository code owner.
-
-### Pull Requests
-
-Code updates ideally are limited in scope to address one enhancement or bug fix per PR. The associated PR should be linked to the relevant issue.
-
-### Code Owners
-
-- Primary Code owner: Douglas Francis (@douglas-f)
-- Backup Code owner: James Westbrook (@i-ate-a-vm)
-
-The responsibility of the code owners is to approve and Merge PR's on the repository, and generally manage and direct issue discussions.
-
-## Repository Settings
-
-Settings that should be applied to repos
-
-### Branch Protection
-
-#### main Branch
-
-- Require a pull request before merging
-- Require Approvals
-- Dismiss stale pull requests approvals when new commits are pushed
-- Require review from Code Owners
-
-#### other branches
-
-- add as needed
-
-### GitHub Actions
-
-Future state. There are current inatitives for running CI/CD tooling as GitHub actions.
+  kv_name                         = "${local.resource_prefix}-ad-kv"
+  resource_group_name             = data.terraform_remote_state.setup.outputs.key_vault_rg_name
+  tenant_id                       = var.tenant_id
+  enabled_for_disk_encryption     = false
+  enabled_for_deployment          = false
+  enabled_for_template_deployment = true
+  regional_tags                   = var.regional_tags
+  global_tags                     = var.global_tags
+  diag_log_analytics_id           = data.terraform_remote_state.core.outputs.core_la_id
+  tags = {
+    Plane = "Management"
+  }
+  network_acls = {
+    bypass         = "AzureServices"
+    default_action = "Deny"
+    virtual_network_subnet_ids = concat(
+      values(data.terraform_remote_state.usgv_mgmt_vnet.outputs.usgv_mgmt_vnet_subnet_ids),
+    )
+    ip_rules = var.cidrs_for_remote_access
+  }
+}
+```
