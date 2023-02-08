@@ -2,7 +2,7 @@ variable "kv_name" {
   description = "Key Vault Name"
   type        = string
   validation {
-    condition     = can(regex("^[a-zA-Z0-9-]{3,24}$", var.kv_name))
+    condition     = can(regex("^[a-zA-Z0-9-]{1,21}$", var.kv_name))
     error_message = "Kv_name may only contain alphanumeric characters and dashes and must be between 3-24 chars."
   }
 }
