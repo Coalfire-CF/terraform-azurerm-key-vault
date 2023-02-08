@@ -26,7 +26,7 @@ Module creates an Azure Key Vault and configures diagnostic settings to send log
 | regional_tags | Regional level tags | map(string) | N/A | yes |
 | global_tags | Global level tags | map(string) | N/A | yes |
 | enabled_for_template_deployment | Allow ARM to retrieve secrets | bool | true | no |
-| network_acls | Object with attributes: `bypass`, `default_action`, `ip_rules`, `virtual_network_subnet_ids`. See https://www.terraform.io/docs/providers/azurerm/r/key_vault.html#bypass for more information | object | null | no |
+| network_acls | Object with attributes: `bypass`, `default_action`, `ip_rules`, `virtual_network_subnet_ids`. See <https://www.terraform.io/docs/providers/azurerm/r/key_vault.html#bypass> for more information | object | null | no |
 
 ## Outputs
 
