@@ -1,10 +1,10 @@
 # Azure Key Vault
 
-Azure Key Vault Deployment
+Azure Key Vault Module
 
 ## Description
 
-This module manages an Azure Key Vault.
+Module creates an Azure Key Vault and configures diagnostic settings to send logs to a Log Analytics Workspace.
 
 ## Resource List
 
@@ -20,13 +20,13 @@ This module manages an Azure Key Vault.
 | resource_group_name | Azure Resource Group resource will be deployed in | string | N/A | yes |
 | diag_log_analytics_id | ID of the Log Analytics Workspace diagnostic logs should be sent to | string | N/A | yes |
 | tenant_id | The Azure tenant id | string | N/A | yes |
-| enabled_for_deployment | Allows Azure VM's to retreive secrets | bool | N/A | yes |
+| enabled_for_deployment | Allows Azure VM's to retrieve secrets | bool | N/A | yes |
 | enabled_for_disk_encryption | Azure Disk Encryption to retrieve secrets | bool | N/A | yes |
 | tags | Resource level tags | map(string) | N/A | yes |
 | regional_tags | Regional level tags | map(string) | N/A | yes |
 | global_tags | Global level tags | map(string) | N/A | yes |
 | enabled_for_template_deployment | Allow ARM to retrieve secrets | bool | true | no |
-| network_acls | Object with attributes: `bypass`, `default_action`, `ip_rules`, `virtual_network_subnet_ids`. See https://www.terraform.io/docs/providers/azurerm/r/key_vault.html#bypass for more informations | object | null | no |
+| network_acls | Object with attributes: `bypass`, `default_action`, `ip_rules`, `virtual_network_subnet_ids`. See https://www.terraform.io/docs/providers/azurerm/r/key_vault.html#bypass for more information | object | null | no |
 
 ## Outputs
 
@@ -34,7 +34,7 @@ This module manages an Azure Key Vault.
 |------|-------------|
 | key_vault_id | The ID of the Key Vault |
 | key_vault_name | Name of the Key Vault |
-| key_vault_uri | The URI of the Key Vault | 
+| key_vault_uri | The URI of the Key Vault |
 
 ## Usage
 
