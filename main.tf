@@ -32,7 +32,7 @@ resource "azurerm_key_vault" "key-vault" {
 }
 
 module "diag" {
-  source                = "../coalfire-diagnostic/"
+  source                = "git@github.com:Coalfire-CF/ACE-Azure-Diagnostics.git?ref=v1.0.1"
   diag_log_analytics_id = var.diag_log_analytics_id
   resource_id           = azurerm_key_vault.key-vault.id
   resource_type         = "kv"
