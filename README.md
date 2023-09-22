@@ -9,6 +9,8 @@
 
 Module creates an Azure Key Vault and configures diagnostic settings to send logs to a Log Analytics Workspace.
 
+Learn more at [Coalfire OpenSource](https://coalfire.com/opensource).
+
 ## Resource List
 
 - Key Vault
@@ -18,8 +20,8 @@ Module creates an Azure Key Vault and configures diagnostic settings to send log
 
 This module can be called as outlined below.
 
-- Change directories to the `terraform-azurerm-keyvault` directory.
-- From the `/terraform-azurerm-keyvault` directory run `terraform init`.
+- Change directories to the `terraform-azurerm-key-vault` directory.
+- From the `/terraform-azurerm-key-vault` directory run `terraform init`.
 - Run `terraform plan` to review the resources being created.
 - If everything looks correct in the plan output, run `terraform apply`.
 
@@ -34,7 +36,7 @@ provider "azurerm" {
 
 module "ad_kv" {
   module "grafana_kv" {
-  source = "github.com/Coalfire-CF/ACE-Azure-KeyVault"
+  source = "github.com/Coalfire-CF/terraform-azurerm-key-vault"
 
   kv_name                         = "${local.resource_prefix}-graf-kv"
   resource_group_name             = data.terraform_remote_state.setup.outputs.key_vault_rg_name
@@ -78,7 +80,7 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_diag"></a> [diag](#module\_diag) | github.com/Coalfire-CF/Ace-Azure-Diagnostics | n/a |
+| <a name="module_diag"></a> [diag](#module\_diag) | github.com/Coalfire-CF/ | n/a |
 
 ## Resources
 
