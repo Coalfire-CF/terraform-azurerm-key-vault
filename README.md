@@ -1,6 +1,9 @@
-# Azure Key Vault
+<div align="center">
+<img src="coalfire_logo.png" width="200">
 
-Azure Key Vault Module
+</div>
+
+# terraform-azurerm-keyvault
 
 ## Description
 
@@ -11,45 +14,38 @@ Module creates an Azure Key Vault and configures diagnostic settings to send log
 - Key Vault
 - Diagnostic settings
 
-## Inputs
+## Deployment Steps
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
-| kv_name | The Key Vault name | string | N/A | yes |
-| location | The Azure location/region to create resources in | string | N/A | yes |
-| resource_group_name | Azure Resource Group resource will be deployed in | string | N/A | yes |
-| diag_log_analytics_id | ID of the Log Analytics Workspace diagnostic logs should be sent to | string | N/A | yes |
-| tenant_id | The Azure tenant id | string | N/A | yes |
-| enabled_for_deployment | Allows Azure VM's to retrieve secrets | bool | N/A | yes |
-| enabled_for_disk_encryption | Azure Disk Encryption to retrieve secrets | bool | N/A | yes |
-| tags | Resource level tags | map(string) | N/A | yes |
-| regional_tags | Regional level tags | map(string) | N/A | yes |
-| global_tags | Global level tags | map(string) | N/A | yes |
-| enabled_for_template_deployment | Allow ARM to retrieve secrets | bool | true | no |
-| network_acls | Object with attributes: `bypass`, `default_action`, `ip_rules`, `virtual_network_subnet_ids`. See <https://www.terraform.io/docs/providers/azurerm/r/key_vault.html#bypass> for more information | object | null | no |
+This module can be called as outlined below.
 
-## Outputs
-
-| Name | Description |
-|------|-------------|
-| key_vault_id | The ID of the Key Vault |
-| key_vault_name | Name of the Key Vault |
-| key_vault_uri | The URI of the Key Vault |
+- Change directories to the `terraform-azurerm-keyvault` directory.
+- From the `/terraform-azurerm-keyvault` directory run `terraform init`.
+- Run `terraform plan` to review the resources being created.
+- If everything looks correct in the plan output, run `terraform apply`.
 
 ## Usage
 
-```hcl
-module "ad_kv" {
-  source = "../../../../modules/coalfire-az-key-vault"
+Include example for how to call the module below with generic variables
 
-  kv_name                         = "${local.resource_prefix}-ad-kv"
+```hcl
+provider "azurerm" {
+  features {}
+}
+
+module "ad_kv" {
+  module "grafana_kv" {
+  source = "github.com/Coalfire-CF/ACE-Azure-KeyVault"
+
+  kv_name                         = "${local.resource_prefix}-graf-kv"
   resource_group_name             = data.terraform_remote_state.setup.outputs.key_vault_rg_name
+  location                        = var.location
   tenant_id                       = var.tenant_id
   enabled_for_disk_encryption     = false
-  enabled_for_deployment          = false
+  enabled_for_deployment          = true
   enabled_for_template_deployment = true
+  kv_sku                          = "premium"
   regional_tags                   = var.regional_tags
-  global_tags                     = var.global_tags
+  global_tags                     = merge(var.global_tags, local.global_local_tags)
   diag_log_analytics_id           = data.terraform_remote_state.core.outputs.core_la_id
   tags = {
     Plane = "Management"
@@ -59,6 +55,7 @@ module "ad_kv" {
     default_action = "Deny"
     virtual_network_subnet_ids = concat(
       values(data.terraform_remote_state.usgv_mgmt_vnet.outputs.usgv_mgmt_vnet_subnet_ids),
+      local.app_subnet_ids
     )
     ip_rules = var.cidrs_for_remote_access
   }
@@ -74,8 +71,8 @@ No requirements.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.4.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | 3.4.3 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.73.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.5.1 |
 
 ## Modules
 
