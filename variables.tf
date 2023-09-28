@@ -8,7 +8,7 @@ variable "kv_name" {
 }
 
 variable "resource_group_name" {
-  description = "Azure Region"
+  description = "Resource Group of Key Vault"
   type        = string
 }
 
