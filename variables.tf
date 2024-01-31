@@ -25,7 +25,7 @@ variable "tenant_id" {
 
 variable "enabled_for_deployment" {
   type        = bool
-  description = "Allows Azure VM's to retreive secrets"
+  description = "Allows Azure VM's to retrieve secrets"
 }
 
 variable "enabled_for_disk_encryption" {
