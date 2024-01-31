@@ -28,7 +28,6 @@ resource "azurerm_key_vault" "key-vault" {
       virtual_network_subnet_ids = acl.value.virtual_network_subnet_ids
     }
   }
-
 }
 
 module "diag" {
