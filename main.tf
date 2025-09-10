@@ -12,8 +12,9 @@ resource "azurerm_key_vault" "key-vault" {
   enabled_for_template_deployment = var.enabled_for_template_deployment
   tenant_id                       = var.tenant_id
   soft_delete_retention_days      = 7
-  purge_protection_enabled        = true
-  enable_rbac_authorization       = true
+  purge_protection_enabled        = var.purge_protection_enabled
+  enable_rbac_authorization       = var.enable_rbac_authorization 
+  public_network_access_enabled   = var.public_network_access_enabled
   sku_name                        = "standard"
   tags = merge({
     Function = "Secrets Management"
