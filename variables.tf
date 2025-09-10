@@ -23,6 +23,24 @@ variable "tenant_id" {
 
 }
 
+variable "public_network_access_enabled" {
+  description = "Whether public network access is allowed (true) or disabled (false)."
+  type        = bool
+  default     = false
+}
+
+variable "purge_protection_enabled" {
+  description = "Whether purge protection is enabled for the Key Vault. Strongly recommended for production."
+  type        = bool
+  default     = true
+}
+
+variable "enable_rbac_authorization" {
+  description = "Whether RBAC authorization is enabled for the Key Vault instead of access policies."
+  type        = bool
+  default     = true
+}
+
 variable "enabled_for_deployment" {
   type        = bool
   description = "Allows Azure VM's to retrieve secrets"
