@@ -26,7 +26,7 @@ variable "tenant_id" {
 variable "public_network_access_enabled" {
   description = "Whether public network access is allowed (true) or disabled (false)."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "purge_protection_enabled" {
