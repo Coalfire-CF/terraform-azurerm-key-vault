@@ -31,7 +31,7 @@ resource "azurerm_key_vault" "key-vault" {
 }
 
 module "diag" {
-  source                = "github.com/Coalfire-CF/terraform-azurerm-diagnostics"
+  source                = "git::https://github.com/Coalfire-CF/terraform-azurerm-diagnostics"
   diag_log_analytics_id = var.diag_log_analytics_id
   resource_id           = azurerm_key_vault.key-vault.id
   resource_type         = "kv"
