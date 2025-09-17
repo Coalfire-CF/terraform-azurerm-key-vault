@@ -79,7 +79,6 @@ No requirements.
 |------|--------|---------|
 | <a name="module_diag"></a> [diag](#module\_diag) | github.com/Coalfire-CF/terraform-azurerm-diagnostics | v1.0.6 |
 
-
 ## Resources
 
 | Name | Type |
