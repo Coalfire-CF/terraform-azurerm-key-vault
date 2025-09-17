@@ -3,7 +3,7 @@ resource "random_integer" "kvid" {
   max = 99
 }
 
-resource "azurerm_key_vault" "key-vault" {
+resource "azurerm_key_vault" "key_vault" {
   name                            = "${var.kv_name}-${random_integer.kvid.result}"
   location                        = var.location
   resource_group_name             = var.resource_group_name
@@ -31,8 +31,8 @@ resource "azurerm_key_vault" "key-vault" {
 }
 
 module "diag" {
-  source                = "github.com/Coalfire-CF/terraform-azurerm-diagnostics"
+  source                = "github.com/Coalfire-CF/terraform-azurerm-diagnostics?ref=v1.0.6"
   diag_log_analytics_id = var.diag_log_analytics_id
-  resource_id           = azurerm_key_vault.key-vault.id
+  resource_id           = azurerm_key_vault.key_vault.id
   resource_type         = "kv"
 }
