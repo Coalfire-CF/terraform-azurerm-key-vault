@@ -28,6 +28,21 @@ Learn more at [Coalfire OpenSource](https://coalfire.com/opensource).
 
 This submodule can be called as outlined below.
 
+### Prerequisites
+
+**Authentication Setup+**
+
+```bash
+export ARM_SUBSCRIPTION_ID="your-subscription-id-here"
+```
+
+You can find your subscription ID using:
+```bash
+az account show --query id -o tsv
+```
+
+### Deployment
+
 - Change directories to your Terraform configuration directory.
 - Include the module call in your Terraform configuration.
 - Run `terraform init` to initialize the module.
