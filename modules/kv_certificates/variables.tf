@@ -24,7 +24,6 @@ variable "certificate_policy" {
     content_type           = optional(string, "application/x-pkcs12")
     extended_key_usage     = optional(list(string), ["1.3.6.1.5.5.7.3.1", "1.3.6.1.5.5.7.3.2"])
     key_usage              = optional(list(string), ["digitalSignature", "keyEncipherment"])
-    subject                = string
     validity_in_months     = optional(number, 12)
     subject_alternative_names = optional(object({
       dns_names = optional(list(string), [])
@@ -90,25 +89,21 @@ variable "certificate_type" {
 variable "subject_common_name" {
   description = "Common Name (CN) for the certificate subject"
   type        = string
-  default     = null
 }
 
 variable "subject_organization" {
   description = "Organization (O) for the certificate subject"
   type        = string
-  default     = null
 }
 
 variable "subject_organizational_unit" {
   description = "Organizational Unit (OU) for the certificate subject"
   type        = string
-  default     = null
 }
 
 variable "subject_country" {
   description = "Country (C) for the certificate subject"
   type        = string
-  default     = "US"
   validation {
     condition     = length(var.subject_country) == 2
     error_message = "Country must be a 2-character ISO country code."
@@ -118,11 +113,9 @@ variable "subject_country" {
 variable "subject_state" {
   description = "State or Province (ST) for the certificate subject"
   type        = string
-  default     = null
 }
 
 variable "subject_locality" {
   description = "Locality (L) for the certificate subject"
   type        = string
-  default     = null
 }

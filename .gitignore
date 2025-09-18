@@ -38,3 +38,4 @@ override.tf.json
 *.ppk
 
 reference/
+modules/kv_certificates/test/

@@ -1,12 +1,12 @@
 locals {
-  # Construct subject string from individual components or use provided subject
-  subject_string = var.certificate_policy != null && var.certificate_policy.subject != null ? var.certificate_policy.subject : join(",", compact([
-    var.subject_common_name != null ? "CN=${var.subject_common_name}" : null,
-    var.subject_organizational_unit != null ? "OU=${var.subject_organizational_unit}" : null,
-    var.subject_organization != null ? "O=${var.subject_organization}" : null,
-    var.subject_locality != null ? "L=${var.subject_locality}" : null,
-    var.subject_state != null ? "ST=${var.subject_state}" : null,
-    var.subject_country != null ? "C=${var.subject_country}" : null
+  # Construct subject string from individual components
+  subject_string = join(",", compact([
+    "CN=${var.subject_common_name}",
+    "OU=${var.subject_organizational_unit}",
+    "O=${var.subject_organization}",
+    "L=${var.subject_locality}",
+    "ST=${var.subject_state}",
+    "C=${var.subject_country}"
   ]))
 }
 
