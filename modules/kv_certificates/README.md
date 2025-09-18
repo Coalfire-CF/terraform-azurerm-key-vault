@@ -18,7 +18,7 @@ Learn more at [Coalfire OpenSource](https://coalfire.com/opensource).
 
 - **Dual Certificate Support**: Generate new certificates or import existing ones
 - **FedRAMP Compliance**: Defaults to 4096-bit RSA keys and strong encryption standards
-- **Flexible Subject Configuration**: Build certificate subjects from individual components or provide custom subject strings
+- **Required Subject Components**: Build certificate subjects from individual required components
 - **Auto-Renewal Support**: Optional automatic certificate renewal before expiration
 - **Comprehensive Outputs**: All certificate metadata, thumbprints, and attributes
 - **Subject Alternative Names**: Support for DNS names, emails, and UPNs
@@ -73,9 +73,16 @@ module "ca_signed_cert" {
   key_vault_id     = module.key_vault.key_vault_id
   certificate_type = "generate"
 
+  # Required subject components
+  subject_common_name         = "myapp.example.com"
+  subject_organization        = "My Organization"
+  subject_organizational_unit = "IT Department"
+  subject_locality           = "Seattle"
+  subject_state              = "WA"
+  subject_country            = "US"
+
   certificate_policy = {
     issuer_name        = "DigiCert"  # Or your CA issuer
-    subject           = "CN=myapp.example.com,OU=IT,O=My Org,L=Seattle,ST=WA,C=US"
     validity_in_months = 24
     key_size          = 4096
     key_type          = "RSA"
@@ -125,7 +132,7 @@ This module includes FedRAMP-compliant defaults:
 - **Extended Key Usage**: Server Authentication (1.3.6.1.5.5.7.3.1), Client Authentication (1.3.6.1.5.5.7.3.2)
 - **Validity Period**: 12 months
 - **Auto-Renewal**: 30 days before expiration
-- **Country**: US (configurable)
+- **Country**: Required input (no default)
 
 ### Import Mode
 - Imports existing certificates (PFX/P12 format)
@@ -163,12 +170,12 @@ This module includes FedRAMP-compliant defaults:
 | certificate_policy | Certificate policy configuration for generating certificates | `object` | `null` | no |
 | certificate_contents | Certificate contents for importing existing certificates | `object` | `null` | no |
 | enable_auto_renewal | Enable automatic certificate renewal | `bool` | `true` | no |
-| subject_common_name | Common Name (CN) for the certificate subject | `string` | `null` | no |
-| subject_organization | Organization (O) for the certificate subject | `string` | `null` | no |
-| subject_organizational_unit | Organizational Unit (OU) for the certificate subject | `string` | `null` | no |
-| subject_country | Country (C) for the certificate subject | `string` | `"US"` | no |
-| subject_state | State or Province (ST) for the certificate subject | `string` | `null` | no |
-| subject_locality | Locality (L) for the certificate subject | `string` | `null` | no |
+| subject_common_name | Common Name (CN) for the certificate subject | `string` | n/a | yes |
+| subject_organization | Organization (O) for the certificate subject | `string` | n/a | yes |
+| subject_organizational_unit | Organizational Unit (OU) for the certificate subject | `string` | n/a | yes |
+| subject_country | Country (C) for the certificate subject | `string` | n/a | yes |
+| subject_state | State or Province (ST) for the certificate subject | `string` | n/a | yes |
+| subject_locality | Locality (L) for the certificate subject | `string` | n/a | yes |
 | tags | Resource level tags | `map(string)` | `{}` | no |
 | regional_tags | Regional level tags | `map(string)` | `{}` | no |
 | global_tags | Global level tags | `map(string)` | `{}` | no |
