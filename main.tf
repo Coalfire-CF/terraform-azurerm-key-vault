@@ -15,7 +15,7 @@ resource "azurerm_key_vault" "key_vault" {
   purge_protection_enabled        = var.purge_protection_enabled
   rbac_authorization_enabled       = var.rbac_authorization_enabled 
   public_network_access_enabled   = var.public_network_access_enabled
-  sku_name                        = "standard"
+  sku_name                        = var.sku_name
   tags = merge({
     Function = "Secrets Management"
   }, var.tags, var.global_tags, var.regional_tags)

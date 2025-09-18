@@ -20,7 +20,12 @@ variable "location" {
 variable "tenant_id" {
   description = "Azure tenant ID"
   type        = string
+}
 
+variable "sku_name" {
+  description = "SKU for Key Vault"
+  type = string
+  default = "standard"
 }
 
 variable "public_network_access_enabled" {
