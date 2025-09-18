@@ -55,13 +55,10 @@ resource "azurerm_key_vault_certificate" "certificate" {
         subject            = local.subject_string
         validity_in_months = var.certificate_policy != null ? var.certificate_policy.validity_in_months : 12
 
-        dynamic "subject_alternative_names" {
-          for_each = var.certificate_policy != null && var.certificate_policy.subject_alternative_names != null ? [var.certificate_policy.subject_alternative_names] : []
-          content {
-            dns_names = subject_alternative_names.value.dns_names
-            emails    = subject_alternative_names.value.emails
-            upns      = subject_alternative_names.value.upns
-          }
+        subject_alternative_names {
+          dns_names = var.certificate_policy != null && var.certificate_policy.subject_alternative_names != null ? var.certificate_policy.subject_alternative_names.dns_names : []
+          emails    = var.certificate_policy != null && var.certificate_policy.subject_alternative_names != null ? var.certificate_policy.subject_alternative_names.emails : []
+          upns      = var.certificate_policy != null && var.certificate_policy.subject_alternative_names != null ? var.certificate_policy.subject_alternative_names.upns : []
         }
       }
     }
