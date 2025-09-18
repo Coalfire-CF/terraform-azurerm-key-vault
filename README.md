@@ -77,13 +77,13 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_diag"></a> [diag](#module\_diag) | github.com/Coalfire-CF/terraform-azurerm-diagnostics | n/a |
+| <a name="module_diag"></a> [diag](#module\_diag) | github.com/Coalfire-CF/terraform-azurerm-diagnostics | v1.0.6 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [azurerm_key_vault.key-vault](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault) | resource |
+| [azurerm_key_vault.key_vault](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault) | resource |
 | [random_integer.kvid](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) | resource |
 
 ## Inputs

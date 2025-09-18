@@ -1,5 +1,6 @@
 # Local .terraform directories
 **/.terraform/*
+.terraform.lock.hcl
 
 # .tfstate files
 *.tfstate
@@ -38,4 +39,3 @@ override.tf.json
 *.ppk
 
 reference/
-modules/kv_certificates/test/
