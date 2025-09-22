@@ -3,8 +3,8 @@
 # =====================================================
 
 # Azure Key Vault Information (from your existing setup)
-key_vault_name      = "kw-sandbox-kv-39"
-resource_group_name = "kw-sandbox-va-mgmt-core-rg"
+key_vault_name      = "sandbox-kv-01"
+resource_group_name = "sandbox--mgmt-core-rg"
 
 # =====================================================
 # OPTIONAL VALUES - MODIFY AS NEEDED
