@@ -1,28 +1,25 @@
 ![Coalfire](../../coalfire_logo.png)
 
-# Key Vault Key Submodule
-
 ## Description
 
-This submodule creates and manages Azure Key Vault certificates with support for both generated certificates (self-signed or CA-signed) and imported certificates.
+This submodule creates and manages Azure Key Vault cryptographic keys with support for RSA and Elliptic Curve (EC) keys, including HSM-backed variants for enhanced security requirements.
 
 Learn more at [Coalfire OpenSource](https://coalfire.com/opensource).
 
 ## Resource List
 
-- Azure Key Vault Certificate
-- Certificate Policy (for generated certificates)
-- Certificate Contents (for imported certificates)
+- Azure Key Vault Key
+- Key Rotation Policy
 
 ## Features
 
-- **Dual Certificate Support**: Generate new certificates or import existing ones
-- **FedRAMP Compliance**: Defaults to 4096-bit RSA keys and strong encryption standards
-- **Required Subject Components**: Build certificate subjects from individual required components
-- **Auto-Renewal Support**: Optional automatic certificate renewal before expiration
-- **Comprehensive Outputs**: All certificate metadata, thumbprints, and attributes
-- **Subject Alternative Names**: Support for DNS names, emails, and UPNs
-- **Consistent Tagging**: Integration with global, regional, and resource-level tags
+- **Multiple Key Types**: Support for RSA, RSA-HSM, EC, and EC-HSM keys
+- **FedRAMP Compliance**: Defaults to 2048-bit RSA keys with automatic rotation
+- **Automatic Key Rotation**: Built-in rotation policies with configurable expiration and notification
+- **Cryptographic Flexibility**: Configurable key operations (encrypt, decrypt, sign, verify, wrap, unwrap)
+- **HSM Support**: Hardware Security Module-backed keys for FedRAMP High requirements
+- **Comprehensive Outputs**: Key IDs, versions, and public key formats
+- **Consistent Tagging**: Integration with compliance and management tags
 
 ## Deployment Steps
 
@@ -30,7 +27,7 @@ This submodule can be called as outlined below.
 
 ### Prerequisites
 
-**Authentication Setup+**
+**Authentication Setup**
 
 ```bash
 export ARM_SUBSCRIPTION_ID="your-subscription-id-here"
@@ -51,25 +48,16 @@ az account show --query id -o tsv
 
 ## Usage
 
-### Generate a Self-Signed Certificate
+### Basic RSA Key (FedRAMP Moderate)
 
 ```hcl
-module "self_signed_cert" {
-  source = "./modules/kv_certificates"
+module "encryption_key" {
+  source = "github.com/Coalfire-CF/terraform-azurerm-key-vault/modules/kv_key"
 
-  certificate_name = "my-app-cert"
-  key_vault_id     = module.key_vault.key_vault_id
-  certificate_type = "generate"
-  
-  # Subject components (will be combined into subject string)
-  subject_common_name         = "myapp.example.com"
-  subject_organization        = "My Organization"
-  subject_organizational_unit = "IT Department"
-  subject_locality           = "Seattle"
-  subject_state              = "WA"
-  subject_country            = "US"
-
-  enable_auto_renewal = true
+  name         = "my-encryption-key"
+  key_vault_id = module.key_vault.key_vault_id
+  key_type     = "RSA"
+  key_size     = 4096
 
   tags = {
     Environment = "Production"
@@ -78,61 +66,101 @@ module "self_signed_cert" {
 }
 ```
 
-### Generate a CA-Signed Certificate
+### HSM-Backed RSA Key (FedRAMP High)
 
 ```hcl
-module "ca_signed_cert" {
-  source = "./modules/kv_certificates"
+module "hsm_key" {
+  source = "github.com/Coalfire-CF/terraform-azurerm-key-vault/modules/kv_key"
 
-  certificate_name = "ca-signed-cert"
-  key_vault_id     = module.key_vault.key_vault_id
-  certificate_type = "generate"
+  name         = "hsm-protected-key"
+  key_vault_id = module.key_vault.key_vault_id
+  key_type     = "RSA-HSM"
+  key_size     = 4096
 
-  # Required subject components
-  subject_common_name         = "myapp.example.com"
-  subject_organization        = "My Organization"
-  subject_organizational_unit = "IT Department"
-  subject_locality           = "Seattle"
-  subject_state              = "WA"
-  subject_country            = "US"
+  # Custom rotation policy
+  rotation_policy_enabled    = true
+  rotation_expire_after      = "P180D"  # 180 days
+  rotation_time_before_expiry = "P30D"   # Rotate 30 days before expiry
 
-  certificate_policy = {
-    issuer_name        = "DigiCert"  # Or your CA issuer
-    validity_in_months = 24
-    key_size          = 4096
-    key_type          = "RSA"
-    subject_alternative_names = {
-      dns_names = ["myapp.example.com", "api.myapp.example.com"]
-    }
+  tags = {
+    Environment = "Production"
+    Compliance  = "FedRAMP-High"
+    DataClass   = "Sensitive"
   }
+}
+```
+
+### Elliptic Curve Key
+
+```hcl
+module "ec_key" {
+  source = "github.com/Coalfire-CF/terraform-azurerm-key-vault/modules/kv_key"
+
+  name         = "ec-signing-key"
+  key_vault_id = module.key_vault.key_vault_id
+  key_type     = "EC"
+  curve        = "P-384"
+
+  # Restrict operations to signing only
+  key_opts = ["sign", "verify"]
 
   enable_auto_renewal = true
 
   tags = {
     Environment = "Production"
-    CertType   = "CA-Signed"
+    Purpose     = "Digital-Signature"
   }
 }
 ```
 
-### Import an Existing Certificate
+### Key with Custom Expiration
 
 ```hcl
-module "imported_cert" {
-  source = "./modules/kv_certificates"
+module "temp_key" {
+  source = "github.com/Coalfire-CF/terraform-azurerm-key-vault/modules/kv_key"
 
-  certificate_name = "imported-cert"
-  key_vault_id     = module.key_vault.key_vault_id
-  certificate_type = "import"
+  name         = "temporary-key"
+  key_vault_id = module.key_vault.key_vault_id
+  key_type     = "RSA"
+  key_size     = 3072
 
-  certificate_contents = {
-    contents = file("path/to/certificate.pfx")
-    password = var.cert_password
+  # Set explicit expiration date
+  expiration_date = "2026-12-31T23:59:59Z"
+
+  # Disable automatic rotation (manual rotation required)
+  rotation_policy_enabled = false
+
+  tags = {
+    Environment = "Development"
+    Purpose     = "Testing"
   }
+}
+```
+
+### Key with All Operations
+
+```hcl
+module "multipurpose_key" {
+  source = "github.com/Coalfire-CF/terraform-azurerm-key-vault/modules/kv_key"
+
+  name         = "multipurpose-key"
+  key_vault_id = module.key_vault.key_vault_id
+  key_type     = "RSA"
+  key_size     = 4096
+
+  # All supported operations
+  key_opts = [
+    "decrypt",
+    "encrypt",
+    "sign",
+    "unwrapKey",
+    "verify",
+    "wrapKey"
+  ]
 
   tags = {
     Environment = "Production"
-    Source     = "External"
+    Purpose     = "Multi-Function"
   }
 }
 ```
@@ -141,19 +169,15 @@ module "imported_cert" {
 
 This module includes FedRAMP-compliant defaults:
 
-- **Key Size**: 4096 bits (RSA)
-- **Key Type**: RSA
-- **Key Usage**: Digital Signature, Key Encipherment
-- **Extended Key Usage**: Server Authentication (1.3.6.1.5.5.7.3.1), Client Authentication (1.3.6.1.5.5.7.3.2)
-- **Validity Period**: 12 months
-- **Auto-Renewal**: 30 days before expiration
-- **Country**: Required input (no default)
-
-### Import Mode
-- Imports existing certificates (PFX/P12 format)
-- Preserves original certificate properties
-- Password-protected certificates supported
-- Useful for migrating certificates from other systems
+- **Key Type**: RSA (software-protected)
+- **Key Size**: 2048 bits minimum (RSA)
+- **EC Curve**: P-256 minimum (Elliptic Curve)
+- **Key Operations**: All operations enabled by default (encrypt, decrypt, sign, verify, wrap, unwrap)
+- **Rotation Policy**: Enabled by default
+- **Rotation Period**: 90 days
+- **Rotation Advance Notice**: 30 days before expiration
+- **Notification Period**: 30 days before expiration
+- **Required Tags**: Compliance=FedRAMP, ManagedBy=Terraform
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
