@@ -83,7 +83,7 @@ variable "rotation_notify_before_expiry" {
 }
 
 variable "tags" {
-  description = "Tags to apply to the key (required for FedRAMP compliance tracking)"
+  description = "Tags to apply to the key"
   type        = map(string)
   default = {
     Compliance = "FedRAMP"

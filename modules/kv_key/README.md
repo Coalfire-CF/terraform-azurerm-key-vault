@@ -13,11 +13,10 @@ Learn more at [Coalfire OpenSource](https://coalfire.com/opensource).
 
 ## Features
 
-- **Multiple Key Types**: Support for RSA, RSA-HSM, EC, and EC-HSM keys
-- **FedRAMP Compliance**: Defaults to 2048-bit RSA keys with automatic rotation
+- **Multiple Key Types**: Support for RSA and EC keys
+- **FedRAMP Compliance**: Defaults to 4096-bit RSA keys with automatic rotation
 - **Automatic Key Rotation**: Built-in rotation policies with configurable expiration and notification
 - **Cryptographic Flexibility**: Configurable key operations (encrypt, decrypt, sign, verify, wrap, unwrap)
-- **HSM Support**: Hardware Security Module-backed keys for FedRAMP High requirements
 - **Comprehensive Outputs**: Key IDs, versions, and public key formats
 - **Consistent Tagging**: Integration with compliance and management tags
 
