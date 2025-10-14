@@ -20,7 +20,30 @@ variable "location" {
 variable "tenant_id" {
   description = "Azure tenant ID"
   type        = string
+}
 
+variable "sku_name" {
+  description = "SKU for Key Vault"
+  type = string
+  default = "standard"
+}
+
+variable "public_network_access_enabled" {
+  description = "Whether public network access is allowed (true) or disabled (false)."
+  type        = bool
+  default     = true
+}
+
+variable "purge_protection_enabled" {
+  description = "Whether purge protection is enabled for the Key Vault. Strongly recommended for production."
+  type        = bool
+  default     = true
+}
+
+variable "rbac_authorization_enabled" {
+  description = "Whether RBAC authorization is enabled for the Key Vault instead of access policies."
+  type        = bool
+  default     = true
 }
 
 variable "enabled_for_deployment" {

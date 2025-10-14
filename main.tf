@@ -12,9 +12,10 @@ resource "azurerm_key_vault" "key_vault" {
   enabled_for_template_deployment = var.enabled_for_template_deployment
   tenant_id                       = var.tenant_id
   soft_delete_retention_days      = 7
-  purge_protection_enabled        = true
-  enable_rbac_authorization       = true
-  sku_name                        = "standard"
+  purge_protection_enabled        = var.purge_protection_enabled
+  rbac_authorization_enabled       = var.rbac_authorization_enabled 
+  public_network_access_enabled   = var.public_network_access_enabled
+  sku_name                        = var.sku_name
   tags = merge({
     Function = "Secrets Management"
   }, var.tags, var.global_tags, var.regional_tags)
@@ -32,7 +33,6 @@ resource "azurerm_key_vault" "key_vault" {
 
 module "diag" {
   source                = "git::https://github.com/Coalfire-CF/terraform-azurerm-diagnostics?ref=v1.0.6"
-
   diag_log_analytics_id = var.diag_log_analytics_id
   resource_id           = azurerm_key_vault.key_vault.id
   resource_type         = "kv"
