@@ -13,11 +13,12 @@ Learn more at [Coalfire OpenSource](https://coalfire.com/opensource).
 
 ## Features
 
-- **Multiple Key Types**: Support for RSA and EC keys
+- **Multiple Key Types**: Support for RSA, RSA-HSM, EC, and EC-HSM keys
 - **FedRAMP Compliance**: Defaults to 4096-bit RSA keys with automatic rotation
 - **Automatic Key Rotation**: Built-in rotation policies with configurable expiration and notification
 - **Cryptographic Flexibility**: Configurable key operations (encrypt, decrypt, sign, verify, wrap, unwrap)
 - **Comprehensive Outputs**: Key IDs, versions, and public key formats
+- **HSM Support**: Hardware Security Module-backed keys for FedRAMP High requirements
 - **Consistent Tagging**: Integration with compliance and management tags
 
 ## Deployment Steps
@@ -181,55 +182,52 @@ This module includes FedRAMP-compliant defaults:
 
 | Name | Version |
 |------|---------|
-| terraform | >= 1.3.2 |
-| azurerm | >= 3.73 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.2 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 4.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| azurerm | >= 3.73 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 4.0 |
+
+## Modules
+
+No modules.
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [azurerm_key_vault_certificate.certificate](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_certificate) | resource |
+| [azurerm_key_vault_key.key](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_key) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| certificate_name | The name of the certificate | `string` | n/a | yes |
-| key_vault_id | The ID of the Key Vault where the certificate will be stored | `string` | n/a | yes |
-| certificate_type | Type of certificate to create: 'generate' or 'import' | `string` | `"generate"` | no |
-| certificate_policy | Certificate policy configuration for generating certificates | `object` | `null` | no |
-| certificate_contents | Certificate contents for importing existing certificates | `object` | `null` | no |
-| enable_auto_renewal | Enable automatic certificate renewal | `bool` | `true` | no |
-| subject_common_name | Common Name (CN) for the certificate subject | `string` | n/a | yes |
-| subject_organization | Organization (O) for the certificate subject | `string` | n/a | yes |
-| subject_organizational_unit | Organizational Unit (OU) for the certificate subject | `string` | n/a | yes |
-| subject_country | Country (C) for the certificate subject | `string` | n/a | yes |
-| subject_state | State or Province (ST) for the certificate subject | `string` | n/a | yes |
-| subject_locality | Locality (L) for the certificate subject | `string` | n/a | yes |
-| tags | Resource level tags | `map(string)` | `{}` | no |
-| regional_tags | Regional level tags | `map(string)` | `{}` | no |
-| global_tags | Global level tags | `map(string)` | `{}` | no |
+| <a name="input_curve"></a> [curve](#input\_curve) | Elliptic curve name for EC keys (P-256, P-384, P-521). FedRAMP requires P-256 or higher | `string` | `"P-256"` | no |
+| <a name="input_expiration_date"></a> [expiration\_date](#input\_expiration\_date) | Expiration date of the key in RFC3339 format. FedRAMP requires key rotation | `string` | `null` | no |
+| <a name="input_key_opts"></a> [key\_opts](#input\_key\_opts) | List of key operations | `list(string)` | <pre>[<br/>  "decrypt",<br/>  "encrypt",<br/>  "sign",<br/>  "unwrapKey",<br/>  "verify",<br/>  "wrapKey"<br/>]</pre> | no |
+| <a name="input_key_size"></a> [key\_size](#input\_key\_size) | Size of the RSA key (2048, 3072, or 4096). FedRAMP requires minimum 2048 | `number` | `4096` | no |
+| <a name="input_key_type"></a> [key\_type](#input\_key\_type) | Type of key (RSA or EC). FedRAMP requires RSA-2048 or higher, or EC P-256 or higher | `string` | `"RSA"` | no |
+| <a name="input_key_vault_id"></a> [key\_vault\_id](#input\_key\_vault\_id) | The ID of the Key Vault where the key will be created | `string` | n/a | yes |
+| <a name="input_name"></a> [name](#input\_name) | Name of the Key Vault key | `string` | n/a | yes |
+| <a name="input_rotation_expire_after"></a> [rotation\_expire\_after](#input\_rotation\_expire\_after) | Time after creation when the key expires. | `string` | `"P90D"` | no |
+| <a name="input_rotation_notify_before_expiry"></a> [rotation\_notify\_before\_expiry](#input\_rotation\_notify\_before\_expiry) | Time before expiry to send notification | `string` | `"P29D"` | no |
+| <a name="input_rotation_policy_enabled"></a> [rotation\_policy\_enabled](#input\_rotation\_policy\_enabled) | Enable automatic key rotation policy | `bool` | `true` | no |
+| <a name="input_rotation_time_before_expiry"></a> [rotation\_time\_before\_expiry](#input\_rotation\_time\_before\_expiry) | Time before expiry to automatically rotate the key | `string` | `"P30D"` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | Tags to apply to the key | `map(string)` | <pre>{<br/>  "Compliance": "FedRAMP",<br/>  "ManagedBy": "Terraform"<br/>}</pre> | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| certificate_id | The ID of the Key Vault certificate |
-| certificate_name | The name of the Key Vault certificate |
-| certificate_version | The current version of the Key Vault certificate |
-| certificate_versionless_id | The versionless ID of the Key Vault certificate |
-| certificate_secret_id | The secret ID of the Key Vault certificate |
-| certificate_thumbprint | The X.509 thumbprint of the Key Vault certificate |
-| certificate_data | The raw certificate data in PEM format (sensitive) |
-| certificate_attribute | The certificate attributes (created, expires, etc.) |
-| certificate_subject | The subject of the certificate |
-| certificate_sans | The Subject Alternative Names (SANs) of the certificate |
+| <a name="output_key_id"></a> [key\_id](#output\_key\_id) | The ID of the Key Vault key |
+| <a name="output_key_resource_id"></a> [key\_resource\_id](#output\_key\_resource\_id) | The resource ID of the Key Vault key |
+| <a name="output_key_version"></a> [key\_version](#output\_key\_version) | The current version of the Key Vault key |
+| <a name="output_key_versionless_id"></a> [key\_versionless\_id](#output\_key\_versionless\_id) | The versionless ID of the Key Vault key |
+| <a name="output_public_key_openssh"></a> [public\_key\_openssh](#output\_public\_key\_openssh) | The public key in OpenSSH format |
+| <a name="output_public_key_pem"></a> [public\_key\_pem](#output\_public\_key\_pem) | The public key in PEM format |
 <!-- END_TF_DOCS -->
 
 ## Contributing

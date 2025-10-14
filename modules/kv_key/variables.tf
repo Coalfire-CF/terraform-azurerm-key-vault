@@ -13,8 +13,8 @@ variable "key_type" {
   type        = string
   default     = "RSA"
   validation {
-    condition     = contains(["RSA", "EC"], var.key_type)
-    error_message = "Key type must be RSA or EC"
+    condition     = contains(["RSA", "RSA-HSM", "EC", "EC-HSM"], var.key_type)
+    error_message = "Key type must be RSA, RSA-HSM, EC, or EC-HSM"
   }
 }
 
@@ -23,7 +23,10 @@ variable "key_size" {
   type        = number
   default     = 4096
   validation {
-    condition     = contains([2048, 3072, 4096], var.key_size)
+    condition = (
+      var.key_type == "EC" || var.key_type == "EC-HSM" ? true :
+      contains([2048, 3072, 4096], var.key_size)
+    )
     error_message = "Key size must be 2048, 3072, or 4096 for FedRAMP compliance"
   }
 }
@@ -33,7 +36,10 @@ variable "curve" {
   type        = string
   default     = "P-256"
   validation {
-    condition     = var.curve == null || contains(["P-256", "P-384", "P-521", "P-256K"], var.curve)
+    condition = (
+      var.key_type == "RSA" || var.key_type == "RSA-HSM" ? true :
+      contains(["P-256", "P-384", "P-521", "P-256K"], var.curve)
+    )
     error_message = "Curve must be P-256, P-384, P-521, or P-256K"
   }
 }
