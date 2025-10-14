@@ -31,8 +31,7 @@ provider "azurerm" {
   features {}
 }
 
-module "ad_kv" {
-  module "grafana_kv" {
+module "kv" {
   source = "github.com/Coalfire-CF/terraform-azurerm-key-vault"
 
   kv_name                         = "${local.resource_prefix}-graf-kv"
