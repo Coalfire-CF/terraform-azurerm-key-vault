@@ -31,3 +31,10 @@ updates:
     commit-message:
       prefix: "chore"
       include: "scope"
+  - package-ecosystem: "terraform"
+    directory: "/modules/kv_key"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
