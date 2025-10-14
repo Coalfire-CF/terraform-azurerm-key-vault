@@ -74,7 +74,7 @@ module "hsm_key" {
 
   name         = "fed-key"
   key_vault_id = module.key_vault.key_vault_id
-  key_type     = "RSA"
+  key_type     = "RSA-HSM"
   key_size     = 4096
 
   # Custom rotation policy
