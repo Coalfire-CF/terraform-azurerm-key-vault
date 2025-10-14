@@ -103,8 +103,6 @@ module "ec_key" {
   # Restrict operations to signing only
   key_opts = ["sign", "verify"]
 
-  enable_auto_renewal = true
-
   tags = {
     Environment = "Production"
     Purpose     = "Digital-Signature"
