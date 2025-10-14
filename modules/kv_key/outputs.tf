@@ -3,6 +3,11 @@ output "key_id" {
   value       = azurerm_key_vault_key.key.id
 }
 
+output "key_name" {
+  description = "The name of the Key Vault key"
+  value       = azurerm_key_vault_key.key.name
+}
+
 output "key_version" {
   description = "The current version of the Key Vault key"
   value       = azurerm_key_vault_key.key.version
