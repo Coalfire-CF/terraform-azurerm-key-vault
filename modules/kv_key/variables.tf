@@ -13,8 +13,8 @@ variable "key_type" {
   type        = string
   default     = "RSA"
   validation {
-    condition     = contains(["RSA", "RSA-HSM", "EC", "EC-HSM"], var.key_type)
-    error_message = "Key type must be RSA, RSA-HSM, EC, or EC-HSM"
+    condition     = contains(["RSA", "EC"], var.key_type)
+    error_message = "Key type must be RSA or EC"
   }
 }
 

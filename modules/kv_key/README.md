@@ -72,9 +72,9 @@ module "encryption_key" {
 module "hsm_key" {
   source = "github.com/Coalfire-CF/terraform-azurerm-key-vault/modules/kv_key"
 
-  name         = "hsm-protected-key"
+  name         = "fed-key"
   key_vault_id = module.key_vault.key_vault_id
-  key_type     = "RSA-HSM"
+  key_type     = "RSA"
   key_size     = 4096
 
   # Custom rotation policy
