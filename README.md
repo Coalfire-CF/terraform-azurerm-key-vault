@@ -130,3 +130,37 @@ No requirements.
 ### Copyright
 
 Copyright © 2023 Coalfire Systems Inc.
+## Tree
+```
+.
+|-- CHANGELOG.md
+|-- CONTRIBUTING.md
+|-- LICENSE
+|-- License.md
+|-- README.md
+|-- SECURITY.md
+|-- coalfire_logo.png
+|-- main.tf
+|-- modules
+|   |-- kv_certificates
+|   |   |-- README.md
+|   |   |-- example
+|   |   |   |-- main.tf
+|   |   |   |-- outputs.tf
+|   |   |   |-- terraform.tfvars
+|   |   |   |-- variables.tf
+|   |   |-- main.tf
+|   |   |-- outputs.tf
+|   |   |-- variables.tf
+|   |   |-- versions.tf
+|   |-- kv_key
+|       |-- README.md
+|       |-- main.tf
+|       |-- outputs.tf
+|       |-- variables.tf
+|       |-- versions.tf
+|-- outputs.tf
+|-- release-please-config.json
+|-- update-readme-tree.sh
+|-- variables.tf
+```
