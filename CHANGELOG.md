@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.2](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v1.1.1...v1.1.2) (2025-10-16)
+
+
+### Miscellaneous
+
+* **deps:** bump diag::terraform-azurerm-diagnostics ([5503c8b](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/5503c8bf306ed8a18661c443bef5b890e6dfcd09))
+* **deps:** bump diag::terraform-azurerm-diagnostics from 1.0.6 to 1.1.0 ([8ab33f9](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/8ab33f9552213a96fed0021bd6381a66396ed7d3))
+
 ## [1.1.1](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v1.1.0...v1.1.1) (2025-10-15)
 
 
