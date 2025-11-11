@@ -13,7 +13,7 @@ resource "azurerm_key_vault" "key_vault" {
   tenant_id                       = var.tenant_id
   soft_delete_retention_days      = 7
   purge_protection_enabled        = var.purge_protection_enabled
-  rbac_authorization_enabled       = var.rbac_authorization_enabled 
+  rbac_authorization_enabled      = var.rbac_authorization_enabled 
   public_network_access_enabled   = var.public_network_access_enabled
   sku_name                        = var.sku_name
   tags = merge({
