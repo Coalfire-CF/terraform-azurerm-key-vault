@@ -49,11 +49,13 @@ variable "rbac_authorization_enabled" {
 variable "enabled_for_deployment" {
   type        = bool
   description = "Allows Azure VM's to retrieve secrets"
+  default     = true
 }
 
 variable "enabled_for_disk_encryption" {
   type        = bool
   description = "Azure Disk Encryption to retrieve secrets"
+  default     = true
 }
 
 variable "enabled_for_template_deployment" {
