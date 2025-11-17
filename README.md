@@ -136,7 +136,6 @@ Copyright © 2023 Coalfire Systems Inc.
 |-- CHANGELOG.md
 |-- CONTRIBUTING.md
 |-- LICENSE
-|-- License.md
 |-- README.md
 |-- SECURITY.md
 |-- coalfire_logo.png
