@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.4](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v1.1.3...v1.1.4) (2025-11-19)
+
+
+### Miscellaneous
+
+* remove obsolete update-readme-tree.sh script ([168dc9a](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/168dc9a34711654ffcd0de5837fa122f45952609))
+* remove obsolete update-readme-tree.sh script ([4454896](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/44548969257e18f7d23cef9e93eaba5af4e3b5d2))
+* remove old LICENSE file ([b7de65b](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/b7de65b02efd31cbf5bdbb1f29e0d735c029dee6))
+* remove old LICENSE file ([cab470b](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/cab470be780a7b5540373f1a4801b7e95e58424f))
+* update README tree ([f13d92e](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/f13d92ef44c22e85642f55628808acaf466f1dd8))
+* update README tree ([6c5460c](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/6c5460c1622e2faade9a3e9e006fa6cd78d2e843))
+
 ## [1.1.3](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v1.1.2...v1.1.3) (2025-11-11)
 
 
