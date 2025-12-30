@@ -15,26 +15,26 @@ variable "key_vault_id" {
 variable "certificate_policy" {
   description = "Certificate policy configuration for generating certificates"
   type = object({
-    issuer_name            = optional(string, "Self")
-    exportable             = optional(bool, true)
-    key_size               = optional(number, 4096)
-    key_type               = optional(string, "RSA")
-    reuse_key              = optional(bool, false)
-    curve                  = optional(string)
-    content_type           = optional(string, "application/x-pkcs12")
-    extended_key_usage     = optional(list(string), ["1.3.6.1.5.5.7.3.1", "1.3.6.1.5.5.7.3.2"])
-    key_usage              = optional(list(string), ["digitalSignature", "keyEncipherment"])
-    validity_in_months     = optional(number, 12)
+    issuer_name        = optional(string, "Self")
+    exportable         = optional(bool, true)
+    key_size           = optional(number, 4096)
+    key_type           = optional(string, "RSA")
+    reuse_key          = optional(bool, false)
+    curve              = optional(string)
+    content_type       = optional(string, "application/x-pkcs12")
+    extended_key_usage = optional(list(string), ["1.3.6.1.5.5.7.3.1", "1.3.6.1.5.5.7.3.2"])
+    key_usage          = optional(list(string), ["digitalSignature", "keyEncipherment"])
+    validity_in_months = optional(number, 12)
     subject_alternative_names = optional(object({
       dns_names = optional(list(string), [])
       emails    = optional(list(string), [])
       upns      = optional(list(string), [])
     }))
     lifetime_action = optional(object({
-      action_type          = optional(string, "AutoRenew")
-      days_before_expiry   = optional(number, 30)
-      lifetime_percentage  = optional(number)
-    }), {
+      action_type         = optional(string, "AutoRenew")
+      days_before_expiry  = optional(number, 30)
+      lifetime_percentage = optional(number)
+      }), {
       action_type        = "AutoRenew"
       days_before_expiry = 30
     })

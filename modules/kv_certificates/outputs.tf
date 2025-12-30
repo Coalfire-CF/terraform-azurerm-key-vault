@@ -58,12 +58,12 @@ output "resource_manager_versionless_id" {
 output "certificate_attribute" {
   description = "The certificate attributes"
   value = {
-    created     = azurerm_key_vault_certificate.certificate.certificate_attribute[0].created
-    enabled     = azurerm_key_vault_certificate.certificate.certificate_attribute[0].enabled
-    expires     = azurerm_key_vault_certificate.certificate.certificate_attribute[0].expires
-    not_before  = azurerm_key_vault_certificate.certificate.certificate_attribute[0].not_before
+    created        = azurerm_key_vault_certificate.certificate.certificate_attribute[0].created
+    enabled        = azurerm_key_vault_certificate.certificate.certificate_attribute[0].enabled
+    expires        = azurerm_key_vault_certificate.certificate.certificate_attribute[0].expires
+    not_before     = azurerm_key_vault_certificate.certificate.certificate_attribute[0].not_before
     recovery_level = azurerm_key_vault_certificate.certificate.certificate_attribute[0].recovery_level
-    updated     = azurerm_key_vault_certificate.certificate.certificate_attribute[0].updated
+    updated        = azurerm_key_vault_certificate.certificate.certificate_attribute[0].updated
   }
 }
 
