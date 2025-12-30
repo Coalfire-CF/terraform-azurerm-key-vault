@@ -23,7 +23,7 @@ variable "tenant_id" {
 }
 
 variable "sku_name" {
-  description = "SKU for Key Vault"
+  description = "SKU for Key Vault. Valid options are 'standard' and 'premium'. Premium is required for FedRAMP HIGH environments with HSM-backed keys."
   type        = string
   default     = "standard"
 }
