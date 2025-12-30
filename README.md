@@ -89,6 +89,7 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_access_policy"></a> [access\_policy](#input\_access\_policy) | List of access policies for the Key Vault. Note: It's not possible to use both inline access\_policy blocks and azurerm\_key\_vault\_access\_policy resources. | <pre>list(object({<br/>    tenant_id               = string<br/>    object_id               = string<br/>    application_id          = optional(string)<br/>    certificate_permissions = optional(list(string))<br/>    key_permissions         = optional(list(string))<br/>    secret_permissions      = optional(list(string))<br/>    storage_permissions     = optional(list(string))<br/>  }))</pre> | `[]` | no |
 | <a name="input_diag_log_analytics_id"></a> [diag\_log\_analytics\_id](#input\_diag\_log\_analytics\_id) | ID of the Log Analytics Workspace diagnostic logs should be sent to | `string` | n/a | yes |
 | <a name="input_enabled_for_deployment"></a> [enabled\_for\_deployment](#input\_enabled\_for\_deployment) | Allows Azure VM's to retrieve secrets | `bool` | `true` | no |
 | <a name="input_enabled_for_disk_encryption"></a> [enabled\_for\_disk\_encryption](#input\_enabled\_for\_disk\_encryption) | Azure Disk Encryption to retrieve secrets | `bool` | `true` | no |
@@ -102,7 +103,7 @@ No requirements.
 | <a name="input_rbac_authorization_enabled"></a> [rbac\_authorization\_enabled](#input\_rbac\_authorization\_enabled) | Whether RBAC authorization is enabled for the Key Vault instead of access policies. | `bool` | `true` | no |
 | <a name="input_regional_tags"></a> [regional\_tags](#input\_regional\_tags) | Regional level tags | `map(string)` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Resource Group of Key Vault | `string` | n/a | yes |
-| <a name="input_sku_name"></a> [sku\_name](#input\_sku\_name) | SKU for Key Vault | `string` | `"standard"` | no |
+| <a name="input_sku_name"></a> [sku\_name](#input\_sku\_name) | SKU for Key Vault. Valid options are 'standard' and 'premium'. Premium is required for FedRAMP HIGH environments with HSM-backed keys. | `string` | `"standard"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Resource level tags | `map(string)` | n/a | yes |
 | <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | Azure tenant ID | `string` | n/a | yes |
 
