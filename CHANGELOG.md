@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v1.1.4...v1.2.0) (2025-12-30)
+
+
+### Features
+
+* Key Vault optional access policy set ([a85aeb3](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/a85aeb3fa63e6bcffb7c59e1837b4201137e2282))
+
 ## [1.1.4](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v1.1.3...v1.1.4) (2025-11-19)
 
 
