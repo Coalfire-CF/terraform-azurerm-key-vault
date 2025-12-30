@@ -23,9 +23,9 @@ variable "tenant_id" {
 }
 
 variable "sku_name" {
-  description = "SKU for Key Vault"
-  type = string
-  default = "standard"
+  description = "SKU for Key Vault. Valid options are 'standard' and 'premium'. Premium is required for FedRAMP HIGH environments with HSM-backed keys."
+  type        = string
+  default     = "standard"
 }
 
 variable "public_network_access_enabled" {
@@ -74,6 +74,20 @@ variable "network_acls" {
     ip_rules                   = list(string),
     virtual_network_subnet_ids = list(string),
   })
+}
+
+variable "access_policy" {
+  description = "List of access policies for the Key Vault. Note: It's not possible to use both inline access_policy blocks and azurerm_key_vault_access_policy resources."
+  type = list(object({
+    tenant_id               = string
+    object_id               = string
+    application_id          = optional(string)
+    certificate_permissions = optional(list(string))
+    key_permissions         = optional(list(string))
+    secret_permissions      = optional(list(string))
+    storage_permissions     = optional(list(string))
+  }))
+  default = []
 }
 
 variable "global_tags" {

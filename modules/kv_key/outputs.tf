@@ -20,7 +20,7 @@ output "key_versionless_id" {
 
 output "key_resource_id" {
   description = "The resource ID of the Key Vault key"
-  value       = azurerm_key_vault_key.key.resource_id 
+  value       = azurerm_key_vault_key.key.resource_id
 }
 
 output "public_key_pem" {

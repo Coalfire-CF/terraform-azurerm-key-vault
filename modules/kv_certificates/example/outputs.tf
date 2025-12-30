@@ -58,7 +58,7 @@ output "key_vault_info" {
 output "certificate_policy_info" {
   description = "Certificate policy details"
   value = {
-    issuer_name   = module.test_self_signed_cert.certificate_policy_issuer_name
+    issuer_name    = module.test_self_signed_cert.certificate_policy_issuer_name
     key_properties = module.test_self_signed_cert.certificate_policy_key_properties
   }
 }

@@ -24,15 +24,10 @@ This module can be called as outlined below.
 
 ## Usage
 
-Include example for how to call the module below with generic variables
-
+# Key Vault with RBAC (recommeneded) 
 ```hcl
-provider "azurerm" {
-  features {}
-}
-
 module "kv" {
-  source = "github.com/Coalfire-CF/terraform-azurerm-key-vault"
+  source = "github.com/Coalfire-CF/terraform-azurerm-key-vault?ref=X.X.X"
 
   kv_name                         = "${local.resource_prefix}-graf-kv"
   resource_group_name             = data.terraform_remote_state.setup.outputs.key_vault_rg_name
@@ -45,6 +40,9 @@ module "kv" {
   regional_tags                   = var.regional_tags
   global_tags                     = merge(var.global_tags, local.global_local_tags)
   diag_log_analytics_id           = data.terraform_remote_state.core.outputs.core_la_id
+  rbac_authorization_enabled      = true ##default
+
+
   tags = {
     Plane = "Management"
   }
@@ -57,6 +55,53 @@ module "kv" {
     )
     ip_rules = var.cidrs_for_remote_access
   }
+}
+```
+
+# Key Vault with Azure Policy (specific use cases) 
+```hcl
+module "kv" {
+  source = "github.com/Coalfire-CF/terraform-azurerm-key-vault?ref=X.X.X"
+
+  kv_name                         = "${var.resource_prefix}-fw-kv"
+  resource_group_name             = var.resource_group_name
+  location                        = var.location
+  tenant_id                       = var.tenant_id
+  sku_name                        = var.sku_name
+  enabled_for_disk_encryption     = var.enabled_for_disk_encryption
+  enabled_for_deployment          = var.enabled_for_deployment
+  enabled_for_template_deployment = var.enabled_for_template_deployment
+  public_network_access_enabled   = var.kv_public_network_access_enabled
+  diag_log_analytics_id           = var.diag_log_analytics_id
+  rbac_authorization_enabled      = false
+
+  regional_tags = var.regional_tags
+  global_tags   = var.global_tags
+  tags          = var.tags
+
+  network_acls = {
+    bypass                     = "AzureServices"
+    default_action             = var.kms_key_vault_network_access == "Private" ? "Deny" : "Allow"
+    virtual_network_subnet_ids = var.kms_key_vault_network_access == "Private" ? var.kv_subnet_ids : []
+    ip_rules                   = var.cidrs_for_remote_access
+  }
+
+  access_policy = [
+    ## Firewall Managed Identity Access to get certs
+    {
+      tenant_id               = var.tenant_id
+      object_id               = azurerm_user_assigned_identity.firewall_mi.principal_id
+      certificate_permissions = ["Get", "List", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers"]
+      secret_permissions      = ["Get", "List"]
+    },
+    ## Entra Admin Group Access to be able to upload cert
+    {
+      tenant_id               = var.tenant_id
+      object_id               = var.entra_administrators_group_object_id
+      certificate_permissions = ["Get", "List", "Delete", "Create", "Import", "Update", "Recover", "Backup", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers"]
+      secret_permissions      = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore"]
+    }
+  ]
 }
 ```
 
@@ -89,6 +134,7 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_access_policy"></a> [access\_policy](#input\_access\_policy) | List of access policies for the Key Vault. Note: It's not possible to use both inline access\_policy blocks and azurerm\_key\_vault\_access\_policy resources. | <pre>list(object({<br/>    tenant_id               = string<br/>    object_id               = string<br/>    application_id          = optional(string)<br/>    certificate_permissions = optional(list(string))<br/>    key_permissions         = optional(list(string))<br/>    secret_permissions      = optional(list(string))<br/>    storage_permissions     = optional(list(string))<br/>  }))</pre> | `[]` | no |
 | <a name="input_diag_log_analytics_id"></a> [diag\_log\_analytics\_id](#input\_diag\_log\_analytics\_id) | ID of the Log Analytics Workspace diagnostic logs should be sent to | `string` | n/a | yes |
 | <a name="input_enabled_for_deployment"></a> [enabled\_for\_deployment](#input\_enabled\_for\_deployment) | Allows Azure VM's to retrieve secrets | `bool` | `true` | no |
 | <a name="input_enabled_for_disk_encryption"></a> [enabled\_for\_disk\_encryption](#input\_enabled\_for\_disk\_encryption) | Azure Disk Encryption to retrieve secrets | `bool` | `true` | no |
@@ -102,7 +148,7 @@ No requirements.
 | <a name="input_rbac_authorization_enabled"></a> [rbac\_authorization\_enabled](#input\_rbac\_authorization\_enabled) | Whether RBAC authorization is enabled for the Key Vault instead of access policies. | `bool` | `true` | no |
 | <a name="input_regional_tags"></a> [regional\_tags](#input\_regional\_tags) | Regional level tags | `map(string)` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Resource Group of Key Vault | `string` | n/a | yes |
-| <a name="input_sku_name"></a> [sku\_name](#input\_sku\_name) | SKU for Key Vault | `string` | `"standard"` | no |
+| <a name="input_sku_name"></a> [sku\_name](#input\_sku\_name) | SKU for Key Vault. Valid options are 'standard' and 'premium'. Premium is required for FedRAMP HIGH environments with HSM-backed keys. | `string` | `"standard"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Resource level tags | `map(string)` | n/a | yes |
 | <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | Azure tenant ID | `string` | n/a | yes |
 

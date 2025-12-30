@@ -3,7 +3,7 @@ terraform {
 }
 provider "azurerm" {
   features {}
-  environment     = "usgovernment"
+  environment = "usgovernment"
 }
 
 # Data source to get existing Key Vault
@@ -24,9 +24,9 @@ module "test_self_signed_cert" {
   subject_common_name         = var.test_domain
   subject_organization        = var.organization_name
   subject_organizational_unit = var.organizational_unit
-  subject_locality           = var.locality
-  subject_state              = var.state
-  subject_country            = var.country
+  subject_locality            = var.locality
+  subject_state               = var.state
+  subject_country             = var.country
 
   enable_auto_renewal = var.enable_auto_renewal
 

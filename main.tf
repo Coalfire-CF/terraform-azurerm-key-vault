@@ -13,7 +13,7 @@ resource "azurerm_key_vault" "key_vault" {
   tenant_id                       = var.tenant_id
   soft_delete_retention_days      = 7
   purge_protection_enabled        = var.purge_protection_enabled
-  rbac_authorization_enabled      = var.rbac_authorization_enabled 
+  rbac_authorization_enabled      = var.rbac_authorization_enabled
   public_network_access_enabled   = var.public_network_access_enabled
   sku_name                        = var.sku_name
   tags = merge({
@@ -27,6 +27,19 @@ resource "azurerm_key_vault" "key_vault" {
       default_action             = coalesce(acl.value.default_action, "Deny")
       ip_rules                   = acl.value.ip_rules
       virtual_network_subnet_ids = acl.value.virtual_network_subnet_ids
+    }
+  }
+
+  dynamic "access_policy" {
+    for_each = var.access_policy
+    content {
+      tenant_id               = access_policy.value.tenant_id
+      object_id               = access_policy.value.object_id
+      application_id          = access_policy.value.application_id
+      certificate_permissions = access_policy.value.certificate_permissions
+      key_permissions         = access_policy.value.key_permissions
+      secret_permissions      = access_policy.value.secret_permissions
+      storage_permissions     = access_policy.value.storage_permissions
     }
   }
 }

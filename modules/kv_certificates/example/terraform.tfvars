@@ -23,8 +23,8 @@ subject_alternative_names = [
 ]
 
 # Certificate Subject Information
-organization_name    = "Coalfire Systems Inc"
-organizational_unit  = "Systems Engineering"
+organization_name   = "Coalfire Systems Inc"
+organizational_unit = "Systems Engineering"
 locality            = "Westminster"
 state               = "Colorado"
 country             = "US"
