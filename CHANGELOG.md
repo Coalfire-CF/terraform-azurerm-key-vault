@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v1.2.0...v1.2.1) (2026-01-09)
+
+
+### Bug Fixes
+
+* update license year to 2026 ([#43](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/issues/43)) ([d1ae17b](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/d1ae17b5868cffa9a1bf3648e9fc3492b85e4664))
+
 ## [1.2.0](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v1.1.4...v1.2.0) (2025-12-30)
 
 
