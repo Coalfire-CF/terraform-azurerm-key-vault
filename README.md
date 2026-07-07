@@ -25,6 +25,7 @@ This module can be called as outlined below.
 ## Usage
 
 # Key Vault with RBAC (recommeneded) 
+
 ```hcl
 module "kv" {
   source = "github.com/Coalfire-CF/terraform-azurerm-key-vault?ref=X.X.X"
@@ -59,6 +60,7 @@ module "kv" {
 ```
 
 # Key Vault with Azure Policy (specific use cases) 
+
 ```hcl
 module "kv" {
   source = "github.com/Coalfire-CF/terraform-azurerm-key-vault?ref=X.X.X"
@@ -176,7 +178,9 @@ No requirements.
 ### Copyright
 
 Copyright © 2023 Coalfire Systems Inc.
+
 ## Tree
+
 ```text
 .
 |-- CHANGELOG.md
