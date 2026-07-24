@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.2.3](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v1.2.2...v1.2.3) (2026-07-24)
+
+
+### Miscellaneous
+
+* adopt Actions v0.12.1 (bypass auto-merge + event-driven re-merge) ([70d1565](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/70d1565e29c93192e370d6172339dbe450fbd9d7))
+* **deps:** bump the org-actions group with 8 updates ([#145](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/issues/145)) ([0e8e8ac](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/0e8e8acb1f271ab6f7955b840b6acef4d4575965))
+* **deps:** bump the org-actions group with 8 updates ([#147](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/issues/147)) ([96343c4](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/96343c4a72017d1d5f7c73cde6f11a64f56dcbd3))
+* **deps:** bump the org-actions group with 8 updates ([#148](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/issues/148)) ([f4157f5](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/f4157f57123342b28cd19465f9ab893e57796139))
+* **deps:** bump the org-actions group with 8 updates ([#149](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/issues/149)) ([10c436f](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/10c436f9365758cd5bf4e99f2331d2e79429b6df))
+
 ## [1.2.2](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v1.2.1...v1.2.2) (2026-07-07)
 
 
