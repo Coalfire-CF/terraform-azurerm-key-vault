@@ -24,11 +24,7 @@ updates:
         exclude-patterns: ["Coalfire-CF/*"]
         update-types: ["minor", "patch"]
   - package-ecosystem: "terraform"
-    directories:
-      - "/"
-      - "/modules/kv_certificates"
-      - "/modules/kv_certificates/example"
-      - "/modules/kv_key"
+    directory: "/"
     schedule:
       interval: "daily"
       time: "09:04"
@@ -37,12 +33,33 @@ updates:
       include: "scope"
     labels:
       - "dep/terraform-module"
-    groups:
-      terraform:
-        applies-to: version-updates
-        group-by: dependency-name
-        patterns: ["*"]
-      terraform-security:
-        applies-to: security-updates
-        group-by: dependency-name
-        patterns: ["*"]
+  - package-ecosystem: "terraform"
+    directory: "/modules/kv_certificates"
+    schedule:
+      interval: "daily"
+      time: "09:04"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    labels:
+      - "dep/terraform-module"
+  - package-ecosystem: "terraform"
+    directory: "/modules/kv_certificates/example"
+    schedule:
+      interval: "daily"
+      time: "09:04"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    labels:
+      - "dep/terraform-module"
+  - package-ecosystem: "terraform"
+    directory: "/modules/kv_key"
+    schedule:
+      interval: "daily"
+      time: "09:04"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    labels:
+      - "dep/terraform-module"
