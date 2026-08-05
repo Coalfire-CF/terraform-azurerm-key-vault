@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   refresh:
-    uses: Coalfire-CF/Actions/.github/workflows/org-dependabot.yml@23aae589e2eb9c009fad0da45899db6ae59e8d02 # v0.16.0
+    uses: Coalfire-CF/Actions/.github/workflows/org-dependabot.yml@7ca504a7006a39309fd269d7b2f1108073b8d4b5 # PILOT PR-282 fix/dependabot-group-by-directory REVERT after pilot
     with:
       head_branch: ${{ github.head_ref || github.ref_name }}  # PR head, or current branch if not a PR
       include_github_actions: "true"
