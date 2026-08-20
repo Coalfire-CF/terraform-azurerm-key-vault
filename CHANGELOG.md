@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.4](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v1.2.3...v1.2.4) (2026-08-20)
+
+
+### Miscellaneous
+
+* **deps:** bump the org-actions group across 1 directory with 6 updates ([#166](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/issues/166)) ([c37bdc7](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/c37bdc7bc2b39f090ae6e06138ae2460cb2f44d5))
+* **docs:** generate README from _header.md and _footer.md ([#164](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/issues/164)) ([1aaea5e](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/1aaea5e8d5d937d742feaab215d791c2c2601e96))
+* refresh PR template ([#161](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/issues/161)) ([4f6c2a0](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/4f6c2a0c5a4c93beb52e48a1f1f887daec675da2))
+
 ## [1.2.3](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v1.2.2...v1.2.3) (2026-08-05)
 
 
