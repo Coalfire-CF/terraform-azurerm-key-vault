@@ -185,3 +185,4 @@ module "kv" {
 
 Copyright © 2023 Coalfire Systems Inc.
 <!-- END_TF_DOCS -->
+<!-- pilot: exercise renamed callers, reverted before merge -->

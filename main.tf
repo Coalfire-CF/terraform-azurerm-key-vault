@@ -50,3 +50,5 @@ module "diag" {
   resource_id           = azurerm_key_vault.key_vault.id
   resource_type         = "kv"
 }
+
+# pilot: exercise renamed callers, reverted before merge
