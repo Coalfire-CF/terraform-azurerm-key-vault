@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v2.0.0...v2.0.1) (2026-10-20)
+
+
+### Miscellaneous
+
+* **deps:** bump the org-actions group across 1 directory with 7 updates ([#173](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/issues/173)) ([872f856](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/872f856d55164a844fd59b2232316fee16253f82))
+
 ## [2.0.0](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v1.2.4...v2.0.0) (2026-10-20)
 
 
