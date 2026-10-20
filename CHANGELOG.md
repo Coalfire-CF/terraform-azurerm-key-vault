@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v1.2.4...v2.0.0) (2026-10-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* require Terraform 1.16 and azurerm 5.7 ([#174](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/issues/174))
+
+### Features
+
+* require Terraform 1.16 and azurerm 5.7 ([#174](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/issues/174)) ([6ec42ba](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/6ec42ba501cb02cffe9da47a1a9587ff069fccf1))
+
 ## [1.2.4](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v1.2.3...v1.2.4) (2026-10-20)
 
 
