@@ -9,9 +9,9 @@ variable "name" {
 }
 
 variable "key_type" {
-  description = "Type of key (RSA or EC). FedRAMP requires RSA-2048 or higher, or EC P-256 or higher"
+  description = "Key type: RSA-HSM, EC-HSM, RSA or EC. Defaults to RSA-HSM. HSM types need a premium vault. RSA and EC are software-protected keys that do not meet HSM key protection."
   type        = string
-  default     = "RSA"
+  default     = "RSA-HSM"
   validation {
     condition     = contains(["RSA", "RSA-HSM", "EC", "EC-HSM"], var.key_type)
     error_message = "Key type must be RSA, RSA-HSM, EC, or EC-HSM"

@@ -10,6 +10,7 @@ locals {
   ]))
 }
 
+# tflint-ignore: azurerm_resources_missing_prevent_destroy # Callers own lifecycle; prevent_destroy cannot come from an input and would block teardown. Vault soft delete and purge protection protect the certificate.
 resource "azurerm_key_vault_certificate" "certificate" {
   name         = var.certificate_name
   key_vault_id = var.key_vault_id
