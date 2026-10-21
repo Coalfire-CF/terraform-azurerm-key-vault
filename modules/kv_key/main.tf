@@ -1,3 +1,4 @@
+# tflint-ignore: azurerm_resources_missing_prevent_destroy # Callers own lifecycle; prevent_destroy cannot come from an input and would block teardown. Vault soft delete and purge protection protect the key.
 resource "azurerm_key_vault_key" "key" {
   name         = var.name
   key_vault_id = var.key_vault_id
@@ -22,7 +23,3 @@ resource "azurerm_key_vault_key" "key" {
 
   tags = var.tags
 }
-
-
-
-

@@ -14,7 +14,7 @@ Learn more at [Coalfire OpenSource](https://coalfire.com/opensource).
 ## Features
 
 - **Multiple Key Types**: Support for RSA, RSA-HSM, EC, and EC-HSM keys
-- **FedRAMP Compliance**: Defaults to 4096-bit RSA keys with automatic rotation
+- **FedRAMP Compliance**: Defaults to 4096-bit RSA-HSM keys (premium vault) with automatic rotation
 - **Automatic Key Rotation**: Built-in rotation policies with configurable expiration and notification
 - **Cryptographic Flexibility**: Configurable key operations (encrypt, decrypt, sign, verify, wrap, unwrap)
 - **Comprehensive Outputs**: Key IDs, versions, and public key formats
@@ -34,6 +34,7 @@ export ARM_SUBSCRIPTION_ID="your-subscription-id-here"
 ```
 
 You can find your subscription ID using:
+
 ```bash
 az account show --query id -o tsv
 ```
@@ -52,7 +53,7 @@ az account show --query id -o tsv
 
 ```hcl
 module "encryption_key" {
-  source = "github.com/Coalfire-CF/terraform-azurerm-key-vault/modules/kv_key"
+  source = "git::https://github.com/Coalfire-CF/terraform-azurerm-key-vault//modules/kv_key?ref=v3.0.0"
 
   name         = "my-encryption-key"
   key_vault_id = module.key_vault.key_vault_id
@@ -70,7 +71,7 @@ module "encryption_key" {
 
 ```hcl
 module "hsm_key" {
-  source = "github.com/Coalfire-CF/terraform-azurerm-key-vault/modules/kv_key"
+  source = "git::https://github.com/Coalfire-CF/terraform-azurerm-key-vault//modules/kv_key?ref=v3.0.0"
 
   name         = "fed-key"
   key_vault_id = module.key_vault.key_vault_id
@@ -94,7 +95,7 @@ module "hsm_key" {
 
 ```hcl
 module "ec_key" {
-  source = "github.com/Coalfire-CF/terraform-azurerm-key-vault/modules/kv_key"
+  source = "git::https://github.com/Coalfire-CF/terraform-azurerm-key-vault//modules/kv_key?ref=v3.0.0"
 
   name         = "ec-signing-key"
   key_vault_id = module.key_vault.key_vault_id
@@ -115,7 +116,7 @@ module "ec_key" {
 
 ```hcl
 module "temp_key" {
-  source = "github.com/Coalfire-CF/terraform-azurerm-key-vault/modules/kv_key"
+  source = "git::https://github.com/Coalfire-CF/terraform-azurerm-key-vault//modules/kv_key?ref=v3.0.0"
 
   name         = "temporary-key"
   key_vault_id = module.key_vault.key_vault_id
@@ -139,7 +140,7 @@ module "temp_key" {
 
 ```hcl
 module "multipurpose_key" {
-  source = "github.com/Coalfire-CF/terraform-azurerm-key-vault/modules/kv_key"
+  source = "git::https://github.com/Coalfire-CF/terraform-azurerm-key-vault//modules/kv_key?ref=v3.0.0"
 
   name         = "multipurpose-key"
   key_vault_id = module.key_vault.key_vault_id
@@ -167,29 +168,28 @@ module "multipurpose_key" {
 
 This module includes FedRAMP-compliant defaults:
 
-- **Key Type**: RSA (software-protected)
-- **Key Size**: 2048 bits minimum (RSA)
+- **Key Type**: RSA-HSM (HSM-backed, needs a premium vault)
+- **Key Size**: 4096 bits default, 2048 bits minimum (RSA)
 - **EC Curve**: P-256 minimum (Elliptic Curve)
 - **Key Operations**: All operations enabled by default (encrypt, decrypt, sign, verify, wrap, unwrap)
 - **Rotation Policy**: Enabled by default
-- **Rotation Period**: 90 days
-- **Rotation Advance Notice**: 30 days before expiration
-- **Notification Period**: 30 days before expiration
+- **Rotation**: keys expire after 90 days, auto-rotate 30 days before expiry, and notify 29 days before expiry
 - **Required Tags**: Compliance=FedRAMP, ManagedBy=Terraform
 
 <!-- BEGIN_TF_DOCS -->
+<!-- markdownlint-disable MD033 MD034 MD060 -->
 ## Requirements
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.2 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 4.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.16.6, < 2.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 5.10 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 4.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 5.10 |
 
 ## Modules
 
@@ -209,7 +209,7 @@ No modules.
 | <a name="input_expiration_date"></a> [expiration\_date](#input\_expiration\_date) | Expiration date of the key in RFC3339 format. FedRAMP requires key rotation | `string` | `null` | no |
 | <a name="input_key_opts"></a> [key\_opts](#input\_key\_opts) | List of key operations | `list(string)` | <pre>[<br/>  "decrypt",<br/>  "encrypt",<br/>  "sign",<br/>  "unwrapKey",<br/>  "verify",<br/>  "wrapKey"<br/>]</pre> | no |
 | <a name="input_key_size"></a> [key\_size](#input\_key\_size) | Size of the RSA key (2048, 3072, or 4096). FedRAMP requires minimum 2048 | `number` | `4096` | no |
-| <a name="input_key_type"></a> [key\_type](#input\_key\_type) | Type of key (RSA or EC). FedRAMP requires RSA-2048 or higher, or EC P-256 or higher | `string` | `"RSA"` | no |
+| <a name="input_key_type"></a> [key\_type](#input\_key\_type) | Key type: RSA-HSM, EC-HSM, RSA or EC. Defaults to RSA-HSM. HSM types need a premium vault. RSA and EC are software-protected keys that do not meet HSM key protection. | `string` | `"RSA-HSM"` | no |
 | <a name="input_key_vault_id"></a> [key\_vault\_id](#input\_key\_vault\_id) | The ID of the Key Vault where the key will be created | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | Name of the Key Vault key | `string` | n/a | yes |
 | <a name="input_rotation_expire_after"></a> [rotation\_expire\_after](#input\_rotation\_expire\_after) | Time after creation when the key expires. | `string` | `"P90D"` | no |
@@ -228,7 +228,10 @@ No modules.
 | <a name="output_key_versionless_id"></a> [key\_versionless\_id](#output\_key\_versionless\_id) | The versionless ID of the Key Vault key |
 | <a name="output_public_key_openssh"></a> [public\_key\_openssh](#output\_public\_key\_openssh) | The public key in OpenSSH format |
 | <a name="output_public_key_pem"></a> [public\_key\_pem](#output\_public\_key\_pem) | The public key in PEM format |
+<!-- markdownlint-enable MD033 MD034 MD060 -->
 <!-- END_TF_DOCS -->
+
+public_key_pem and public_key_openssh are marked sensitive to keep them out of plan output. They are public key material, not secrets.
 
 ## Contributing
 

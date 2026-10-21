@@ -30,13 +30,14 @@ This submodule can be called as outlined below.
 
 ### Prerequisites
 
-**Authentication Setup+**
+**Authentication Setup**
 
 ```bash
 export ARM_SUBSCRIPTION_ID="your-subscription-id-here"
 ```
 
 You can find your subscription ID using:
+
 ```bash
 az account show --query id -o tsv
 ```
@@ -55,7 +56,7 @@ az account show --query id -o tsv
 
 ```hcl
 module "self_signed_cert" {
-  source = "./modules/kv_certificates"
+  source = "git::https://github.com/Coalfire-CF/terraform-azurerm-key-vault//modules/kv_certificates?ref=v3.0.0"
 
   certificate_name = "my-app-cert"
   key_vault_id     = module.key_vault.key_vault_id
@@ -82,7 +83,7 @@ module "self_signed_cert" {
 
 ```hcl
 module "ca_signed_cert" {
-  source = "./modules/kv_certificates"
+  source = "git::https://github.com/Coalfire-CF/terraform-azurerm-key-vault//modules/kv_certificates?ref=v3.0.0"
 
   certificate_name = "ca-signed-cert"
   key_vault_id     = module.key_vault.key_vault_id
@@ -119,7 +120,7 @@ module "ca_signed_cert" {
 
 ```hcl
 module "imported_cert" {
-  source = "./modules/kv_certificates"
+  source = "git::https://github.com/Coalfire-CF/terraform-azurerm-key-vault//modules/kv_certificates?ref=v3.0.0"
 
   certificate_name = "imported-cert"
   key_vault_id     = module.key_vault.key_vault_id
@@ -150,6 +151,7 @@ This module includes FedRAMP-compliant defaults:
 - **Country**: Required input (no default)
 
 ### Import Mode
+
 - Imports existing certificates (PFX/P12 format)
 - Preserves original certificate properties
 - Password-protected certificates supported
@@ -160,14 +162,14 @@ This module includes FedRAMP-compliant defaults:
 
 | Name | Version |
 |------|---------|
-| terraform | >= 1.3.2 |
-| azurerm | >= 3.73 |
+| terraform | >= 1.16.6, < 2.0 |
+| azurerm | ~> 5.10 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| azurerm | >= 3.73 |
+| azurerm | ~> 5.10 |
 
 ## Resources
 
@@ -206,10 +208,18 @@ This module includes FedRAMP-compliant defaults:
 | certificate_secret_id | The secret ID of the Key Vault certificate |
 | certificate_thumbprint | The X.509 thumbprint of the Key Vault certificate |
 | certificate_data | The raw certificate data in PEM format (sensitive) |
+| certificate_data_base64 | The raw certificate data in base64 format (sensitive) |
+| certificate_versionless_secret_id | The versionless secret ID of the Key Vault certificate |
+| resource_manager_id | The Azure Resource Manager ID of the Key Vault certificate |
+| resource_manager_versionless_id | The Azure Resource Manager versionless ID of the Key Vault certificate |
+| certificate_policy_issuer_name | The issuer name of the certificate policy |
+| certificate_policy_key_properties | The key properties of the certificate policy |
 | certificate_attribute | The certificate attributes (created, expires, etc.) |
 | certificate_subject | The subject of the certificate |
 | certificate_sans | The Subject Alternative Names (SANs) of the certificate |
 <!-- END_TF_DOCS -->
+
+certificate_data and certificate_data_base64 are marked sensitive to keep them out of plan output. They hold the public certificate, not the private key.
 
 ## Contributing
 
