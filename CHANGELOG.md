@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v2.0.1...v3.0.0) (2026-10-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* public access off, premium SKU, RSA-HSM keys and 90-day soft delete by default. network_acls is not nullable and defaults to deny. kv_name needs 3 or more characters.
+
+### Features
+
+* require Terraform 1.16.6 and azurerm 5.10 ([#177](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/issues/177)) ([e0e737e](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/e0e737e742113acd6dc1e4214988a7775b441d50))
+
 ## [2.0.1](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v2.0.0...v2.0.1) (2026-10-20)
 
 
