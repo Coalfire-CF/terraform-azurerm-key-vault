@@ -111,7 +111,7 @@ module "kv" {
 
 ### Keys and certificates
 
-Use the submodules with `source =
-"git::https://github.com/Coalfire-CF/terraform-azurerm-key-vault//modules/kv_key?ref=v3.0.0"` and
+Use the submodules with
+`source = "git::https://github.com/Coalfire-CF/terraform-azurerm-key-vault//modules/kv_key?ref=v3.0.0"` and
 `//modules/kv_certificates?ref=v3.0.0`. See [modules/kv_key](modules/kv_key/README.md) and
 [modules/kv_certificates](modules/kv_certificates/README.md).
