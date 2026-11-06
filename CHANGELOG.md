@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v3.0.0...v3.0.1) (2026-11-06)
+
+
+### Documentation
+
+* wrap Markdown lines at 120 characters (Coalfire-CF/Actions[#375](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/issues/375)) ([#179](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/issues/179)) ([f2b6274](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/commit/f2b6274dd078424456e3c5d703e53df5bd955174))
+
 ## [3.0.0](https://github.com/Coalfire-CF/terraform-azurerm-key-vault/compare/v2.0.1...v3.0.0) (2026-10-21)
 
 
