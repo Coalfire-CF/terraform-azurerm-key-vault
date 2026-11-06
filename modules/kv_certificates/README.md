@@ -4,7 +4,8 @@
 
 ## Description
 
-This submodule creates and manages Azure Key Vault certificates with support for both generated certificates (self-signed or CA-signed) and imported certificates.
+This submodule creates and manages Azure Key Vault certificates with support for both generated certificates
+(self-signed or CA-signed) and imported certificates.
 
 Learn more at [Coalfire OpenSource](https://coalfire.com/opensource).
 
@@ -219,7 +220,8 @@ This module includes FedRAMP-compliant defaults:
 | certificate_sans | The Subject Alternative Names (SANs) of the certificate |
 <!-- END_TF_DOCS -->
 
-certificate_data and certificate_data_base64 are marked sensitive to keep them out of plan output. They hold the public certificate, not the private key.
+certificate_data and certificate_data_base64 are marked sensitive to keep them out of plan output. They hold the public
+certificate, not the private key.
 
 ## Contributing
 

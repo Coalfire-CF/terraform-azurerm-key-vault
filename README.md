@@ -6,7 +6,8 @@
 
 ## Description
 
-Module creates an Azure Key Vault, an optional private endpoint, and diagnostic settings that send logs to a Log Analytics workspace.
+Module creates an Azure Key Vault, an optional private endpoint, and diagnostic settings that send logs to a Log
+Analytics workspace.
 
 Learn more at [Coalfire OpenSource](https://coalfire.com/opensource).
 
@@ -25,13 +26,17 @@ Learn more at [Coalfire OpenSource](https://coalfire.com/opensource).
 - Soft delete keeps deleted objects for 90 days.
 - The SKU is premium, so HSM-backed keys work.
 - Diagnostics go through `terraform-azurerm-diagnostics` v3.0.0.
-- `enabled_for_deployment`, `enabled_for_disk_encryption` and `enabled_for_template_deployment` default to true, but those platform paths only work through the firewall when `network_acls.bypass = "AzureServices"`.
+- `enabled_for_deployment`, `enabled_for_disk_encryption` and `enabled_for_template_deployment` default to true, but
+  those platform paths only work through the firewall when `network_acls.bypass = "AzureServices"`.
 
-Set `private_endpoint_subnet_id` and `private_dns_zone_ids` (zone `privatelink.vaultcore.usgovcloudapi.net`) to create the private endpoint. Without `private_endpoint_subnet_id` the module creates no endpoint, and the caller must create private access.
+Set `private_endpoint_subnet_id` and `private_dns_zone_ids` (zone `privatelink.vaultcore.usgovcloudapi.net`) to create
+the private endpoint. Without `private_endpoint_subnet_id` the module creates no endpoint, and the caller must create
+private access.
 
 ## Deployment Steps
 
-See [examples/default](examples/default) for a complete root with a vault, a key and a certificate. The runner must reach the vault through its private endpoint.
+See [examples/default](examples/default) for a complete root with a vault, a key and a certificate. The runner must
+reach the vault through its private endpoint.
 
 ## Usage
 
@@ -66,7 +71,8 @@ module "kv" {
 
 ### Key Vault with access policies
 
-Access policies cannot be scoped below the vault and are not governed by Entra PIM. Use them only where a consumer cannot use RBAC.
+Access policies cannot be scoped below the vault and are not governed by Entra PIM. Use them only where a consumer
+cannot use RBAC.
 
 ```hcl
 module "kv" {
@@ -107,7 +113,10 @@ module "kv" {
 
 ### Keys and certificates
 
-Use the submodules with `source = "git::https://github.com/Coalfire-CF/terraform-azurerm-key-vault//modules/kv_key?ref=v3.0.0"` and `//modules/kv_certificates?ref=v3.0.0`. See [modules/kv\_key](modules/kv\_key/README.md) and [modules/kv\_certificates](modules/kv\_certificates/README.md).
+Use the submodules with `source =
+"git::https://github.com/Coalfire-CF/terraform-azurerm-key-vault//modules/kv_key?ref=v3.0.0"` and
+`//modules/kv_certificates?ref=v3.0.0`. See [modules/kv\_key](modules/kv\_key/README.md) and
+[modules/kv\_certificates](modules/kv\_certificates/README.md).
 
 <!-- markdownlint-disable MD033 MD034 MD060 -->
 ## Requirements
