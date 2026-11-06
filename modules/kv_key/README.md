@@ -2,7 +2,8 @@
 
 ## Description
 
-This submodule creates and manages Azure Key Vault cryptographic keys with support for RSA and Elliptic Curve (EC) keys, including HSM-backed variants for enhanced security requirements.
+This submodule creates and manages Azure Key Vault cryptographic keys with support for RSA and Elliptic Curve (EC) keys,
+including HSM-backed variants for enhanced security requirements.
 
 Learn more at [Coalfire OpenSource](https://coalfire.com/opensource).
 
@@ -231,7 +232,8 @@ No modules.
 <!-- markdownlint-enable MD033 MD034 MD060 -->
 <!-- END_TF_DOCS -->
 
-public_key_pem and public_key_openssh are marked sensitive to keep them out of plan output. They are public key material, not secrets.
+public_key_pem and public_key_openssh are marked sensitive to keep them out of plan output. They are public key
+material, not secrets.
 
 ## Contributing
 
